@@ -9,7 +9,7 @@ function NavBar() {
       style={{
         display: "flex",
         justifyContent: "space-between",
-        backgroundColor: "#282c34",
+        backgroundColor: "#2C3E50 ",
         color: "white",
         padding: "10px",
       }}
@@ -22,9 +22,6 @@ function NavBar() {
                 Logout
               </Link>
             </div>
-            <Link style={{ color: "white", padding: "5px" }} to={"/iplookup"}>
-              IP Lookup
-            </Link>
           </>
         ) : (
           <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
@@ -45,7 +42,7 @@ function NavBar() {
             ? authState.status
             : authState?.token
             ? `⚡ ${authState?.user}`
-            : ""}
+            : "🚫"}
         </strong>
       </div>
     </div>

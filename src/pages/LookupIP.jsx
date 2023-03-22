@@ -8,6 +8,22 @@ import {
   FormHelperText,
   Input,
   Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Heading,
+  ButtonGroup,
+  Link,
+  Table,
+  Thead,
+  Tbody,
+  Tfoot,
+  Tr,
+  Th,
+  Td,
+  TableCaption,
+  TableContainer,
 } from "@chakra-ui/react";
 import { Search2Icon } from "@chakra-ui/icons";
 
@@ -52,51 +68,65 @@ export const LookupIP = () => {
     <div>
       {" "}
       <header className="App-header">
-        <h1 style={{ display: "flex" }}>
-          <Search2Icon w={8} h={9} color="blue.200" />
-          <strong style={{ marginLeft: "5px" }}>IP Lookup</strong>{" "}
-        </h1>
-
-        <FormControl style={{ maxWidth: "300px" }}>
-          <Input
-            size="sm"
-            placeholder="IP Address"
-            onChange={(e) => setField(e.target.value)}
-          ></Input>
-          <div
+        <Card
+          variant="filled"
+          style={{ backgroundColor: "#2C3E50 ", borderRadius: "25px" }}
+        >
+          <CardHeader>
+            <div style={{ display: "flex" }}>
+              <Search2Icon w={8} h={9} color="blue.200" />
+              <strong
+                style={{ marginLeft: "5px", color: "white", fontSize: "30px" }}
+              >
+                IP Lookup
+              </strong>{" "}
+            </div>
+          </CardHeader>
+          <CardBody>
+            <FormControl style={{ maxWidth: "300px" }}>
+              <Input
+                style={{ backgroundColor: "white", borderRadius: "25px" }}
+                type="text"
+                size="sm"
+                placeholder="IP Address"
+                onChange={(e) => setField(e.target.value)}
+              ></Input>
+            </FormControl>
+          </CardBody>
+          <CardFooter
             style={{
-              padding: "10px",
-              display: "flex",
               justifyContent: "center",
             }}
           >
-            <Button
-              size="sm"
-              colorScheme="twitter"
-              type="submit"
-              onClick={() => setSearch(field)}
-            >
-              Submit
-            </Button>
-          </div>
-        </FormControl>
-
-        <br />
-        <table>
-          <tbody>
-            {res ? (
-              res?.addresses.map((address, i) => (
-                <tr key={i}>
-                  <td>{address.ip}</td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td>0.0.0.0</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+            <ButtonGroup>
+              <Button
+                style={{ borderRadius: "25px" }}
+                colorScheme="twitter"
+                type="submit"
+                onClick={() => setSearch(field)}
+              >
+                Submit
+              </Button>
+            </ButtonGroup>
+          </CardFooter>
+        </Card>
+        <TableContainer>
+          <Table variant="simple">
+            <Tbody>
+              {res ? (
+                res?.addresses.map((address, i) => (
+                  <Tr key={i}>
+                    <Td>{address.ip}</Td>
+                  </Tr>
+                ))
+              ) : (
+                <Tr>
+                  <Td>0.0.0.0</Td>
+                </Tr>
+              )}
+            </Tbody>
+          </Table>
+        </TableContainer>
       </header>
     </div>
   );
