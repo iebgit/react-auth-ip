@@ -1,6 +1,16 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../GlobalState.js";
 import { useNavigate } from "react-router-dom";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Button,
+} from "@chakra-ui/react";
+import { Search2Icon } from "@chakra-ui/icons";
+
 import "../App.css";
 import axios from "axios";
 
@@ -12,6 +22,9 @@ export const LookupIP = () => {
   const nav = useNavigate();
 
   useEffect(() => {
+    if (!authState?.token) {
+      nav("/login");
+    }
     if (search) {
       const lookup = async () => {
         console.log(search);
@@ -30,9 +43,7 @@ export const LookupIP = () => {
   }, [search]);
 
   useEffect(() => {
-    if (authState?.status === "credentials added" || authState?.token) {
-      nav("/iplookup");
-    } else {
+    if (!authState?.token) {
       nav("/login");
     }
   }, [authState]);
@@ -41,22 +52,49 @@ export const LookupIP = () => {
     <div>
       {" "}
       <header className="App-header">
-        <p>welcome back, {authState?.user}</p>
-        <h3>IP Lookup</h3>
-        <div style={{ display: "flex" }}>
-          <input onChange={(e) => setField(e.target.value)}></input>
-          <button onClick={() => setSearch(field)}>submit</button>
-        </div>
+        <h1 style={{ display: "flex" }}>
+          <Search2Icon w={8} h={9} color="blue.200" />
+          <strong style={{ marginLeft: "5px" }}>IP Lookup</strong>{" "}
+        </h1>
+
+        <FormControl style={{ maxWidth: "300px" }}>
+          <Input
+            size="sm"
+            placeholder="IP Address"
+            onChange={(e) => setField(e.target.value)}
+          ></Input>
+          <div
+            style={{
+              padding: "5px",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              size="sm"
+              colorScheme="twitter"
+              type="submit"
+              onClick={() => setSearch(field)}
+            >
+              submit
+            </Button>
+          </div>
+        </FormControl>
+
         <br />
-        <strong style={{ color: "yellow" }}>{res?.domain}</strong>
         <table>
           <tbody>
-            {res &&
+            {res ? (
               res?.addresses.map((address, i) => (
                 <tr key={i}>
                   <td>{address.ip}</td>
                 </tr>
-              ))}
+              ))
+            ) : (
+              <tr>
+                <td>0.0.0.0</td>
+              </tr>
+            )}
           </tbody>
         </table>
       </header>

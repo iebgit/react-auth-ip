@@ -1,7 +1,16 @@
 import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../GlobalState";
 import axios from "axios";
+import { LockIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
+import {
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  FormHelperText,
+  Input,
+  Button,
+} from "@chakra-ui/react";
 import "../App.css";
 
 const LoginPage = () => {
@@ -15,14 +24,14 @@ const LoginPage = () => {
   const [isSignup, setIsSignup] = useState(false);
 
   useEffect(() => {
-    if (authState?.status === "credentials added" || authState?.token) {
+    if (authState?.token) {
       nav("/iplookup");
     } else {
-      nav("/login");
+      setIsSignup(false);
     }
   }, [authState]);
 
-  const handleLogin = async (action) => {
+  const handleLogin = async () => {
     const login = await axios.get("http://localhost:3000/v1/login", {
       params: users,
     });
@@ -45,54 +54,62 @@ const LoginPage = () => {
 
   return (
     <header className="App-header">
-      <h3>{isSignup ? "Signup" : "Login"}</h3>
-      <form onSubmit={handleSubmit}>
-        <div
-          style={{ padding: "5px", display: "flex", justifyContent: "center" }}
-        >
-          <input
-            placeholder="Name"
-            type="text"
-            value={users.username}
-            onChange={(e) => setUsers({ ...users, username: e.target.value })}
-          />
-        </div>
+      <h1 style={{ display: "flex" }}>
+        <LockIcon w={8} h={9} color="orange.500" />
+        <strong style={{ marginLeft: "5px" }}>
+          {isSignup ? "Signup" : "Login"}
+        </strong>
+      </h1>
 
-        <div
-          style={{ padding: "5px", display: "flex", justifyContent: "center" }}
-        >
-          <input
-            placeholder="E-mail"
-            type="email"
-            value={users.email}
-            onChange={(e) => setUsers({ ...users, email: e.target.value })}
-          />
-        </div>
+      <FormControl style={{ maxWidth: "300px" }} onSubmit={handleSubmit}>
+        <Input
+          size="sm"
+          placeholder="User Name"
+          type="text"
+          value={users.username}
+          onChange={(e) => setUsers({ ...users, username: e.target.value })}
+        />
 
-        <div
-          style={{ padding: "5px", display: "flex", justifyContent: "center" }}
-        >
-          <input
-            placeholder="Password"
-            type="password"
-            value={users.password}
-            onChange={(e) => setUsers({ ...users, password: e.target.value })}
-          />
-        </div>
+        <Input
+          placeholder="Email Address"
+          value={users.email}
+          onChange={(e) => setUsers({ ...users, email: e.target.value })}
+          type="email"
+          size="sm"
+        />
 
+        <Input
+          placeholder="Password"
+          size="sm"
+          type="password"
+          value={users.password}
+          onChange={(e) => setUsers({ ...users, password: e.target.value })}
+        />
         <div
-          style={{ padding: "5px", display: "flex", justifyContent: "center" }}
+          style={{
+            padding: "5px",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
-          <button type="submit">{isSignup ? "Sign up" : "Login"}</button>
+          <Button
+            size="sm"
+            colorScheme="twitter"
+            onClick={(e) => handleSubmit(e)}
+          >
+            {isSignup ? "Sign Up" : "Log In"}
+          </Button>
         </div>
-      </form>
-      <button onClick={() => setIsSignup(!isSignup)}>
-        {isSignup
-          ? "Already have an account? Login"
-          : "Need an account? Sign up"}
-      </button>
-      <small style={{ color: "red" }}>
-        {!!authState?.status && authState.status}
+      </FormControl>
+      <small
+        style={{
+          cursor: "pointer",
+          color: "white",
+          textDecoration: "underline",
+        }}
+        onClick={() => setIsSignup(!isSignup)}
+      >
+        {isSignup ? "Have an account? Login" : "Need an account? Sign up"}
       </small>
     </header>
   );

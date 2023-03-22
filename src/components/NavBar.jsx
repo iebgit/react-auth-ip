@@ -1,28 +1,54 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UnlockIcon } from "@chakra-ui/icons";
 import { AuthContext } from "../GlobalState";
 
 function NavBar() {
   const [authState, setAuthState] = useContext(AuthContext);
   return (
-    <div style={{ backgroundColor: "#282c34", color: "white" }}>
-      <br />
-      {authState?.token ? (
-        <>
-          <div onClick={() => setAuthState({})}>
-            <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
-              logout
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        backgroundColor: "#282c34",
+        color: "white",
+        padding: "10px",
+      }}
+    >
+      <div>
+        {authState?.token ? (
+          <>
+            <div onClick={() => setAuthState({})}>
+              <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
+                logout
+              </Link>
+            </div>
+            <Link style={{ color: "white", padding: "5px" }} to={"/iplookup"}>
+              IP Lookup
             </Link>
-          </div>
-          <Link style={{ color: "white", padding: "5px" }} to={"/iplookup"}>
-            IP Lookup
+          </>
+        ) : (
+          <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
+            Login
           </Link>
-        </>
-      ) : (
-        <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
-          Login
-        </Link>
-      )}
+        )}
+      </div>
+      <div>
+        <strong
+          style={{
+            color:
+              authState?.status === "credentials added" || authState?.token
+                ? "yellow"
+                : "red",
+          }}
+        >
+          {!!authState?.status
+            ? authState.status
+            : authState?.token
+            ? `⚡ ${authState?.user}`
+            : ""}
+        </strong>
+      </div>
     </div>
   );
 }
