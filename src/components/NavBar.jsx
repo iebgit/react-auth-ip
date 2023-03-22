@@ -1,6 +1,5 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UnlockIcon } from "@chakra-ui/icons";
 import { AuthContext } from "../GlobalState";
 
 function NavBar() {
@@ -20,7 +19,7 @@ function NavBar() {
           <>
             <div onClick={() => setAuthState({})}>
               <Link style={{ color: "white", padding: "5px" }} to={"/login"}>
-                logout
+                Logout
               </Link>
             </div>
             <Link style={{ color: "white", padding: "5px" }} to={"/iplookup"}>

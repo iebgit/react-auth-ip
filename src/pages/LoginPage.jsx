@@ -57,7 +57,7 @@ const LoginPage = () => {
       <h1 style={{ display: "flex" }}>
         <LockIcon w={8} h={9} color="orange.500" />
         <strong style={{ marginLeft: "5px" }}>
-          {isSignup ? "Signup" : "Login"}
+          {isSignup ? "Sign Up" : "Log In"}
         </strong>
       </h1>
 
@@ -87,7 +87,7 @@ const LoginPage = () => {
         />
         <div
           style={{
-            padding: "5px",
+            padding: "10px",
             display: "flex",
             justifyContent: "center",
           }}
@@ -109,7 +109,7 @@ const LoginPage = () => {
         }}
         onClick={() => setIsSignup(!isSignup)}
       >
-        {isSignup ? "Have an account? Login" : "Need an account? Sign up"}
+        {isSignup ? "Have an account? Log In" : "Need an account? Sign Up"}
       </small>
     </header>
   );

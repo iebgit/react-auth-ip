@@ -65,7 +65,7 @@ export const LookupIP = () => {
           ></Input>
           <div
             style={{
-              padding: "5px",
+              padding: "10px",
               display: "flex",
               justifyContent: "center",
             }}
@@ -76,7 +76,7 @@ export const LookupIP = () => {
               type="submit"
               onClick={() => setSearch(field)}
             >
-              submit
+              Submit
             </Button>
           </div>
         </FormControl>
