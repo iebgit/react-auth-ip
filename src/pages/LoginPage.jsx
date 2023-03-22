@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../GlobalState";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -14,19 +14,24 @@ const LoginPage = () => {
   });
   const [isSignup, setIsSignup] = useState(false);
 
-  const handleLogin = async () => {
+  useEffect(() => {
+    if (authState?.status === "credentials added" || authState?.token) {
+      nav("/iplookup");
+    } else {
+      nav("/login");
+    }
+  }, [authState]);
+
+  const handleLogin = async (action) => {
     const login = await axios.get("http://localhost:3000/v1/login", {
       params: users,
     });
-    console.log(login?.data?.status);
     setAuthState(login?.data);
-    if (login?.data?.token) {
-      nav("/iplookup");
-    }
   };
 
   const handleSignup = async () => {
-    console.log(await axios.post("http://localhost:3000/v1/users", users));
+    const signup = await axios.post("http://localhost:3000/v1/users", users);
+    setAuthState(signup?.data);
   };
 
   const handleSubmit = (event) => {

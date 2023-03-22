@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter, Router, Route, Routes } from "react-router-dom";
-import axios from "axios";
-import logo from "./logo.svg";
 import { AuthProvider } from "./GlobalState";
 import "./App.css";
 import LookupIP from "./pages/LookupIP";
@@ -14,9 +12,9 @@ function App() {
       <AuthProvider>
         <NavBar />
         <Routes>
-          <Route path="/" element={<LoginPage />}></Route>
-          <Route path="/iplookup" element={<LookupIP />}></Route>
-          <Route path="/login" element={<LoginPage />}></Route>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/iplookup" element={<LookupIP />} />
+          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>
